@@ -1,2 +1,2 @@
-# drew_peters_p1_ui
-A Repo for my P1 UI
+# Project 1-UI
+A user interface for the Project 1 application (POC)
