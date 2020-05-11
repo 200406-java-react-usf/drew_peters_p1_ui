@@ -3,7 +3,7 @@ import { View } from "./view.js";
 export class RegisterComponent implements View {
 
     template = `
-        <h1>RegisterComponent works!</h1>
+        <h1>RegisterComponent Works!</h1>
     `;
 
     constructor() {
