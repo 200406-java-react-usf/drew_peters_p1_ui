@@ -110,3 +110,8 @@ dist
 
 # vs code
 .vscode
+
+# misc
+*/__temp__/
+package-lock.json
+docs/
