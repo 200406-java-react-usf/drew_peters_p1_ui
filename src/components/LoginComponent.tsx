@@ -53,9 +53,15 @@ function LoginComponent(props: ILoginProps) {
         props.setAuthUser(authUser);
     }
 
+    let getAllUsers = async () => {
+        let allUsers = await getAllUsers();
+        console.log(allUsers);
+    }
+
     return (
         props.authUser ?
-        <Redirect to="/home" /> :
+        <Redirect to="/home" /> 
+        :
         <>
             <div className={classes.loginContainer}>
                 <form className={classes.loginForm}>
@@ -92,7 +98,6 @@ function LoginComponent(props: ILoginProps) {
             </div>
         </> 
     );
-    
 }
 
 export default LoginComponent;
