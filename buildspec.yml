@@ -14,7 +14,7 @@ phases:
   post_build:
     commands:
       # - aws s3 sync ./build s3://p1-ui
- artifacts:
-  files:
-    - '**/*'
-  base-directory: 'build'
+  artifacts:
+    files:
+      - '**/*'
+    base-directory: 'build'
