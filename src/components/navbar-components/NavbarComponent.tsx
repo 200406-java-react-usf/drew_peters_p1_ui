@@ -59,10 +59,17 @@ function NavbarComponent (props: INavbarProps)  {
                                         <Link to="/reimbursements" className={classes.link}>Submit Reimbursement</Link>
                                     </Typography>
                                 </ListItemText>
+
+                                <ListItemText inset>
+                                    <Typography color="inherit" variant="h6">
+                                        <Link to="/userReimbs" className={classes.link}>View Your Reimbursements</Link>
+                                    </Typography>
+                                </ListItemText>
                             </>
                             :
                             <></>
                         }
+
                         {
                             (props.authUser.role_name === 'Admin') 
                             ?
@@ -88,13 +95,14 @@ function NavbarComponent (props: INavbarProps)  {
                             <>
                                 <ListItemText inset>
                                     <Typography color="inherit" variant="h6">
-                                        <Link to="/reimbursements" className={classes.link}>View All Reimbursments</Link>
+                                        <Link to="/manager" className={classes.link}>View All Reimbursments</Link>
                                     </Typography>
                                 </ListItemText>
                             </>
                             :
                             <></>
                         }
+
                             <ListItemText inset>
                                 <Typography color="inherit" variant="h6">
                                     <span className={classes.link}>{props.authUser.username}</span>
@@ -112,6 +120,8 @@ function NavbarComponent (props: INavbarProps)  {
                         <>
                         </>
                     }
+                    
+
                     {
                         !props.authUser
                         ?
@@ -126,6 +136,7 @@ function NavbarComponent (props: INavbarProps)  {
                         <>
                         </>
                     }
+
                 </ListItem>
             </List>
         </>

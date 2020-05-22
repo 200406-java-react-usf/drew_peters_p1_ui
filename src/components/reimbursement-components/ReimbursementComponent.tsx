@@ -102,7 +102,7 @@ function ReimbursementComponent(props: IReimbursementProps) {
                             onChange={updateFormField}
                             value={typeOf}
                             id="typeOf" type="text"
-                            placeholder="Lodging, Travel, Food, or Other?" />
+                            placeholder="Is it Lodging, Travel, Food, or Other?" />
                     </FormControl>
 
                     <br/> <br/>
