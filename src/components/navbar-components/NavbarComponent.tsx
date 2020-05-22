@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles, List, ListItem, Typography, ListItemText } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { User } from '../../models/user';
-import { logout } from '../../remote/user-service';
+// import { logout } from '../../remote/user-service';
 
 interface INavbarProps {
     authUser: User;
@@ -40,7 +40,7 @@ function NavbarComponent (props: INavbarProps)  {
         <>
             <List component="nav">
                 <ListItem component="div">
-                    <Typography color="inherit" variant="h5">ERS</Typography>
+                    <Typography color="inherit" variant="h5">ERS Portal</Typography>
                     {
                         props.authUser
                         ?
@@ -63,7 +63,6 @@ function NavbarComponent (props: INavbarProps)  {
                             :
                             <></>
                         }
-
                         {
                             (props.authUser.role_name === 'Admin') 
                             ?
@@ -96,7 +95,6 @@ function NavbarComponent (props: INavbarProps)  {
                             :
                             <></>
                         }
-
                             <ListItemText inset>
                                 <Typography color="inherit" variant="h6">
                                     <span className={classes.link}>{props.authUser.username}</span>
@@ -114,8 +112,6 @@ function NavbarComponent (props: INavbarProps)  {
                         <>
                         </>
                     }
-                    
-
                     {
                         !props.authUser
                         ?
@@ -130,7 +126,6 @@ function NavbarComponent (props: INavbarProps)  {
                         <>
                         </>
                     }
-
                 </ListItem>
             </List>
         </>

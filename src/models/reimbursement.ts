@@ -4,7 +4,7 @@ export class Reimbursement {
     amount: number;
     submitted: Date;
     resolved: Date;
-    description: String;
+    description: string;
     author_id: number;
     resolver_id: number;
     reimb_status_id: number;
@@ -15,7 +15,7 @@ export class Reimbursement {
         amount: number, 
         submitted: Date, 
         resolved: Date, 
-        description: String, 
+        description: string, 
         author_id: number, 
         resolver_id: number, 
         reimb_status_id: number,
