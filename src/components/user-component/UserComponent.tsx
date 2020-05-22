@@ -1,79 +1,99 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import MaterialTable from 'material-table';
+import { getAllUsers, update, deleteUserById, register } from '../../remote/user-service';
 import { User } from '../../models/user';
-import { getAllUsers } from '../../remote/user-service';
+import { makeStyles } from '@material-ui/core';
 
-interface IUserProps{
-
+export interface IUserProps {
     authUser: User;
 }
 
-const UserComponent = (props: IUserProps) => {
-    
-    const [usersState, setUsersState] = useState([] as User[]);
+const useStyles = makeStyles({
+    userTable: {
+        display: "flex",
+        justifyContent: "center",
+        margin: 20,
+        marginTop: 40,
+        padding: 20
+    },
+});
 
-    let users: any[] = [];
+const UserComponent = (props: IUserProps) => {
+
+    const classes = useStyles();
+    const [users, setTableData] = useState([new User(0,'','','','','','')]);
+    const [errorMessage, setErrorMessage] = useState('');
+
+    let getTableData = async () => {
+        let result = await getAllUsers();
+        setTableData(result);
+    }
+
+    const updateRow = async (updatedUser: User) => {
+        try {
+            await update(updatedUser);
+            getTableData();
+        } catch (e) {
+            setErrorMessage(e.response.data.reason);
+        }
+    }
+    
+    const deleteRow = async (userToBeDeleted: User) =>{
+        try{
+            await deleteUserById(userToBeDeleted);
+            getTableData();
+        }catch(e){
+            setErrorMessage(e.response.data.reason)
+        }
+    }
+
+    const addNew = async (newUser: User) =>{
+        try{
+            await register(newUser.username, newUser.password, newUser.first_name, newUser.last_name, newUser.email);
+            getTableData();
+        }catch(e){
+            setErrorMessage(e.response.data.reason)
+        }
+    }
 
     useEffect(() => {
+        getTableData();
+    }, []);
 
-        let fetchData = async () => {
-
-            const response = await getAllUsers();
-            
-            for(let user of response){
-
-                users.push(
-                    <>
-                    <tr>
-                        <td>{user.user_id}</td>
-                        <td>{user.first_name}</td>
-                        <td>{user.last_name}</td>
-                        <td>{user.username}</td>
-                        <td>{user.email}</td>
-                        <td>{user.user_role_id}</td>
-                        {/* <td><Link to = '/updateuser' onClick = {
-                            () => {props.setThisUser(new User(user.id, user.username, user.password, user.firstName, user.lastName, user.email, user.roleId))}    
-                        }>Update</Link></td> */}
-
-                        {/* <td><Link to = '/users' onClick = {async () => {
-                            await deleteUser(user.id);
-                        }}>Delete</Link></td> */}
-                    </tr>
-                    </>
-                )
-            }
-            setUsersState(users);
-        }
-        fetchData();
-    },);
-
-    return (
-
-        !props.authUser || (props.authUser.role_name !== 'Admin') ?
-        <>
-            <h1>You're not allowed to see this page.</h1>
-        </>
-        :
-        <>
-            <h1>User Component</h1>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Username</th>
-                        <th>Email</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    {usersState}
-                </tbody>
-
-            </table>
-        </>
-    );
+  return (
+    <>
+        <div className={classes.userTable}>
+            < MaterialTable
+            columns = {[
+                { title: 'User ID', field: 'user_id', editable: 'never'},
+                { title: 'First Name', field: 'first_name', editable: 'onAdd' },
+                { title: 'Last Name', field: 'last_name', editable: 'onAdd' },
+                { title: 'Username', field: 'username', editable: 'always'},
+                { title: 'Email', field: 'email'},
+                { title: 'Role', field: 'user_role_id'},
+            ]}
+            data = {users}
+            title = "All System Users"
+            editable = {{
+                onRowAdd: newData => 
+                new Promise((resolve, reject) => {
+                    addNew(newData);
+                    resolve();
+                }),
+                onRowUpdate: (newData, oldData) => 
+                new Promise((resolve, reject) => {
+                    resolve();
+                    updateRow(newData);
+                }),
+                onRowDelete: oldData =>
+                new Promise((resolve, reject) => {
+                    deleteRow(oldData)
+                })
+            }}
+            />
+        </div>
+    </>
+  );
 }
 
 export default UserComponent;
