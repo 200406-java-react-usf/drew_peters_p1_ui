@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import MaterialTable from 'material-table';
 import { getAllUsers, update, deleteUserById, register } from '../../remote/user-service';
 import { User } from '../../models/user';
+import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core';
 
 export interface IUserProps {
     authUser: User;
+    errorMessage: string;
 }
 
 const useStyles = makeStyles({
@@ -65,12 +67,12 @@ const UserComponent = (props: IUserProps) => {
         <div className={classes.userTable}>
             < MaterialTable
             columns = {[
-                { title: 'User ID', field: 'user_id', editable: 'never'},
+                { title: 'User ID', field: 'ers_user_id', editable: 'never'},
                 { title: 'First Name', field: 'first_name', editable: 'onAdd' },
                 { title: 'Last Name', field: 'last_name', editable: 'onAdd' },
                 { title: 'Username', field: 'username', editable: 'always'},
                 { title: 'Email', field: 'email'},
-                { title: 'Role', field: 'user_role_id'},
+                { title: 'Role', field: 'role_name'},
             ]}
             data = {users}
             title = "All System Users"
@@ -91,6 +93,13 @@ const UserComponent = (props: IUserProps) => {
                 })
             }}
             />
+            {
+                (props.errorMessage)
+                ?
+                < Alert severity="error">{props.errorMessage}</Alert>
+                :
+                <></>
+            }
         </div>
     </>
   );
