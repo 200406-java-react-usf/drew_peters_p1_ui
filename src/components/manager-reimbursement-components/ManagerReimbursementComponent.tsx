@@ -4,7 +4,7 @@ import { Reimbursement } from '../../models/reimbursement';
 import { Alert } from '@material-ui/lab';
 import { makeStyles } from '@material-ui/core';
 import { User } from '../../models/user';
-import { getAllReimbursements, updateReimbursement } from '../../remote/reimbursement-service';
+import { getAllReimbursements, resolveReimbursement } from '../../remote/reimbursement-service';
 
 export interface IManagerReimbursementProps {
     authUser: User;
@@ -27,17 +27,30 @@ const ManagerReimbursementComponent = (props: IManagerReimbursementProps) => {
     const [errorMessage, setErrorMessage] = useState('');
 
     let getTableData = async () => {
+        console.log(props.authUser);
+        
         let result = await getAllReimbursements();
         setTableData(result);
     }
 
     const updateRow = async (updatedReimb: Reimbursement) => {
+        updatedReimb.resolver_id = props.authUser.ers_user_id;
+        // @ts-ignore
+        if (updatedReimb.reimb_status_id as string === 'Approved') {
+            updatedReimb.reimb_status_id = 2;
+        } else {
+            updatedReimb.reimb_status_id = 3;
+        }
+        console.log(updatedReimb);
+ 
         try {
-            await updateReimbursement(updatedReimb);
+            await resolveReimbursement(updatedReimb.reimb_id, updatedReimb.resolver_id, updatedReimb.reimb_status_id);
             getTableData();
         } catch (e) {
             setErrorMessage(e.response.data.reason);
         }
+
+        getTableData();
     }
 
     useEffect(() => {

@@ -2,8 +2,8 @@ export class Reimbursement {
 
     reimb_id: number;
     amount: number;
-    submitted: Date;
-    resolved: Date;
+    timeSubmitted: Date;
+    timeResolved: Date;
     description: string;
     author_id: number;
     resolver_id: number;
@@ -11,7 +11,7 @@ export class Reimbursement {
     reimb_type_id: number;
     
     constructor(
-        id: number, 
+        reimb_id: number, 
         amount: number, 
         submitted: Date, 
         resolved: Date, 
@@ -21,10 +21,10 @@ export class Reimbursement {
         reimb_status_id: number,
         reimb_type_id: number 
     ) {
-        this.reimb_id = id;
+        this.reimb_id = reimb_id;
         this.amount = amount;
-        this.submitted = submitted;
-        this.resolved = resolved;
+        this.timeSubmitted = submitted;
+        this.timeResolved = resolved;
         this.description = description;
         this.author_id = author_id;
         this.resolver_id = resolver_id;

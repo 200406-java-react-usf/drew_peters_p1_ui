@@ -32,8 +32,25 @@ const UserReimbursementComponent = (props: IUserReimbursementProps) => {
     }
 
     const updateRow = async (updatedReimb: Reimbursement) => {
+        
+        console.log(updatedReimb);
+        // @ts-ignore
+        if (updatedReimb.reimb_type_id as string === 'Lodging') {
+            updatedReimb.reimb_type_id = 1;
+        } 
+        // @ts-ignore
+        else if (updatedReimb.reimb_type_id as string === 'Travel') {
+            updatedReimb.reimb_type_id = 2;
+        }
+        // @ts-ignore
+        else if (updatedReimb.reimb_type_id as string === 'Food') {
+            updatedReimb.reimb_type_id = 3;
+        }
+        else {
+            updatedReimb.reimb_type_id = 4;
+        }
         try {
-            await updateReimbursement(updatedReimb);
+            await updateReimbursement(updatedReimb.reimb_id, updatedReimb.amount, updatedReimb.description, updatedReimb.reimb_type_id);
             getTableData();
         } catch (e) {
             setErrorMessage(e.response.data.reason);
