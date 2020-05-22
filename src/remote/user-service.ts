@@ -18,7 +18,7 @@ export async function logout() {
 }
 
 export async function update(u: User) {
-    let response = await ersClient.put('/users', {u});
+    let response = await ersClient.patch(`/users/${u.ers_user_id}`, {u});
     return await response.data;
 }
 

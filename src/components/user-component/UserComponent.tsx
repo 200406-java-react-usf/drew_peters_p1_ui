@@ -28,6 +28,7 @@ const UserComponent = (props: IUserProps) => {
 
     let getTableData = async () => {
         let result = await getAllUsers();
+        console.log(result);
         setTableData(result);
     }
 

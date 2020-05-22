@@ -30,8 +30,6 @@ function HomeComponent (props: IHomeProps) {
         }
     }
 
-
-
     return (
         !props.authUser?.username ?
         < Redirect to="/login" />

@@ -16,7 +16,14 @@ export async function getReimbursementByUsername(username: string) {
     return await response.data;
 }
 
-export async function updateReimbursement(updatedReimb: Reimbursement) {
-    let response = await ersClient.put('reimbursements', {updatedReimb});
+export async function resolveReimbursement(reimb_id: number, resolver_id: number, reimb_status_id: number) {
+    console.log('made it here');
+    let response = await ersClient.patch('/reimbursements', {reimb_id, resolver_id, reimb_status_id});
+    return await response.data;
+}
+
+export async function updateReimbursement(reimb_id: number, amount: number, description: string, reimb_type_id: number) {
+    console.log('made it here');
+    let response = await ersClient.patch('/reimbursements', {reimb_id, amount, description, reimb_type_id});
     return await response.data;
 }
