@@ -11,6 +11,8 @@ phases:
   build: 
     commands:
       - npm run build
-  post_build:
-    commands:
-      - aws s3 sync ./build s3://scotty-thoms-p1
+
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'build'
